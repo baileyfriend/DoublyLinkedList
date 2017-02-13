@@ -1,6 +1,23 @@
 package doublylinkedlist;
 
+
 public class DoublyLinkedList {
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+
+	public Node getTail() {
+		return tail;
+	}
+
+	public void setTail(Node tail) {
+		this.tail = tail;
+	}
+
 	Node head;
 	Node tail;
 	int size;
@@ -51,8 +68,7 @@ public class DoublyLinkedList {
 			return false; // cannot insert into a position if position is
 							// greater than list size
 		} else if (position == 0) { // if pos = 0, then inserting at head
-			Node head = new Node(o,null,null);
-			head.setObject(o);
+			insertAtHead(o);
 			return true;
 		} else {
 			while (current.getNext() != null) {
@@ -67,6 +83,17 @@ public class DoublyLinkedList {
 			}
 			return false;
 		}
+	}
+	
+	
+	public void insertAtHead (Object obj) {
+		if (head == null) //if list is empty
+			head = new Node (obj, null, null);//assign node as top
+		else {//otherwise - aka list isn't empty
+			head = new Node (obj, head, null);
+			head.getNext().setPrev(head);
+		}
+
 	}
 
 	public int size(DoublyLinkedList list) {
@@ -100,16 +127,19 @@ public class DoublyLinkedList {
 		}
 	}
 
-	public Node get(int pos) {
+	public Object get(int pos) {
 		if (head == null) {
 			return null;
 		}
 
 		Node currentNode = head;
 		int currentPos = 0;
+		if(pos == 0){
+			return head.getObject();
+		}
 		while (currentNode.getNext() != null) {
 			if (currentPos == pos) {
-				return currentNode; // exit if removed node - saves some time
+				return currentNode.getObject(); // exit if removed node - saves some time
 			}
 			currentNode = currentNode.getNext();
 		}
